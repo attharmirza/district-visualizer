@@ -1,6 +1,6 @@
 // State Selector for Visualization
-var state = 'Maryland';
-var congress = 114;
+var state = 'North Carolina';
+var congress = 93;
 
 // D3 Visualization Setup
 var width = document.getElementById('map').offsetWidth;
