@@ -1,0 +1,11 @@
+# November 17, 2017
+
+I need to get the data for:
+
+North Carolina, Florida, Louisiana, and Illinois for 1970s-today
+
+Pennsylvania, Maryland from 2000-today
+
+These sites have all the geojson data for all districts in every congress:
+https://github.com/JeffreyBLewis/congressional-district-boundaries
+http://cdmaps.polisci.ucla.edu/
