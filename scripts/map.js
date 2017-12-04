@@ -1,6 +1,6 @@
 // State Selector for Visualization
-var state = 'North Carolina';
-var congress = 93;
+var state = 'Pennsylvania';
+var congress = 114;
 
 // D3 Visualization Setup
 var width = document.getElementById('map').offsetWidth;
@@ -31,6 +31,30 @@ d3.json('/data/USA.json', function(error, map) {
     .style('stroke-width', '0')
     .style('fill', '#f2f2f2');
 
+  d3.json('/data/CurrentCounties.json', function(error, data) {
+    if (error) throw error;
+
+    var counties = svg.append('g').classed('counties', true);
+
+    var length = data.features.length;
+    var stateCounties = [];
+
+    for (var i = 0; i < length; i++) {
+      if (data.features[i].properties.STATE == state) {
+        stateCounties.push(data.features[i]);
+      }
+    }
+
+    counties.selectAll('path')
+      .data(stateCounties)
+      .enter()
+      .append('path')
+      .attr('d', path)
+      .style('stroke', '#c83650')
+      .style('stroke-width', '0.25')
+      .style('fill', 'rgba(0, 0, 0, 0)');
+  });
+
   if (congress < 114) {
 
     console.log(congress + 'th Congress, District Map of ' + state)
@@ -47,7 +71,7 @@ d3.json('/data/USA.json', function(error, map) {
         .attr('d', path)
         .style('stroke', '#36c87e')
         .style('stroke-width', '0.25')
-        .style('fill', '#9dffcd');
+        .style('fill', 'rgba(85, 249, 165, 0.4)');
     });
 
   } else {
@@ -76,7 +100,7 @@ d3.json('/data/USA.json', function(error, map) {
         .attr('d', path)
         .style('stroke', '#36c87e')
         .style('stroke-width', '0.25')
-        .style('fill', '#9dffcd');
+        .style('fill', 'rgba(85, 249, 165, 0.4)');
     });
 
   }
@@ -91,7 +115,7 @@ $('#map').click(function() {
   var svgUrl = URL.createObjectURL(svgBlob);
   var downloadLink = document.createElement('a');
   downloadLink.href = svgUrl;
-  downloadLink.download = state + '_' + congress +'.svg';
+  downloadLink.download = state + '_' + congress + '.svg';
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
