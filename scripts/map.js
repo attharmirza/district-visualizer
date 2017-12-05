@@ -1,5 +1,5 @@
 // State Selector for Visualization
-var state = 'Pennsylvania';
+var state = 'Wyoming';
 var congress = 114;
 
 // D3 Visualization Setup
@@ -10,11 +10,11 @@ var svg = d3.select('#map').append('svg')
   .attr('width', width)
   .attr('height', height);
 
-var projection = d3.geo.albersUsa()
+var projection = d3.geoAlbersUsa()
   .translate([width / 2, height / 2])
   .scale([width]);
 
-var path = d3.geo.path().projection(projection);
+var path = d3.geoPath().projection(projection);
 
 // D3 Visualization Execution
 d3.json('/data/USA.json', function(error, map) {
