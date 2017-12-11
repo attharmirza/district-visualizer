@@ -22,6 +22,11 @@ var g = svg.append('g')
 function clicked(d) {
   state = d.properties.NAME;
 
+  loadCounties({
+    state: state,
+    congress: congress
+  });
+
   loadDistricts({
     state: state,
     congress: congress
@@ -79,29 +84,11 @@ d3.json('data/states.json', function(error, map) {
     .on("click", clicked);
 });
 
-// Load Districts into Visualization
-var loadDistricts = function(config) {
-  d3.selectAll('.counties').remove();
-  d3.selectAll('.districts').remove();
-
-  // State Selector for Visualization
+// Load Counties into Visualization
+var loadCounties = function(config) {
   var state = config.state;
-  var congress = config.congress;
 
-  // Modify Chart Title
-  d3.select('#titleText').remove();
-
-  if (state !== undefined) {
-    d3.select('#title')
-      .append('p')
-      .attr('id', 'titleText')
-      .text(congress + 'th Congress, District Map of ' + state);
-  } else {
-    d3.select('#title')
-      .append('p')
-      .attr('id', 'titleText')
-      .text(congress + 'th Congress of the United States');
-  };
+  d3.selectAll('.counties').remove();
 
   d3.json('data/counties.json', function(error, data) {
     if (error) throw error;
@@ -128,6 +115,30 @@ var loadDistricts = function(config) {
       .classed('county', true)
       // .on("click", clicked);
   });
+}
+
+// Load Districts into Visualization
+var loadDistricts = function(config) {
+  d3.selectAll('.districts').remove();
+
+  // State Selector for Visualization
+  var state = config.state;
+  var congress = config.congress;
+
+  // Modify Chart Title
+  d3.select('#titleText').remove();
+
+  if (state !== undefined) {
+    d3.select('#title')
+      .append('p')
+      .attr('id', 'titleText')
+      .text(congress + 'th Congress, District Map of ' + state);
+  } else {
+    d3.select('#title')
+      .append('p')
+      .attr('id', 'titleText')
+      .text(congress + 'th Congress of the United States');
+  };
 
   d3.json('data/districts/' + congress + '.json', function(error, data) {
     if (error) throw error;
@@ -153,14 +164,6 @@ var loadDistricts = function(config) {
       .style('fill', 'rgba(0, 0, 0, 0)')
       .classed('district', true)
       .on("click", clicked);
-  });
-
-  g.selectAll('g').sort(function(a, b) {
-    console.log(a.attr('class'));
-
-    if (a.attr('class') == 'districts') {
-      return 1;
-    };
   });
 }
 
