@@ -10,9 +10,52 @@
 </head>
 
 <body>
-  <div id="title"></div>
+  <div id="title"><p id="titleText">District Visualizer</p></div>
   <div class="chart" id="map"></div>
   <script src="scripts/map.js"></script>
+  <div class="credits">Created by Atthar Mirza. District data from <a href="http://cdmaps.polisci.ucla.edu/">Jeffrey B. Lewis at UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON">Eric Celeste</a>. Last Updated on 12/11/2017</div>
+  <div class="timeline">
+    <div class="year" id="2015">2015</div>
+    <script>
+    $('#2015').click(function() {
+      $('.year').css('color', '#000');
+      loadCongress(114);
+      loadDistricts({state: state, congress: congress});
+      $(this).css('color', '#36c87e');
+    });
+    </script>
+
+    <div class="year" id="2001">2001</div>
+    <script>
+    $('#2001').click(function() {
+      $('.year').css('color', '#000');
+      loadCongress(107);
+      loadDistricts({state: state, congress: congress});
+      $(this).css('color', '#36c87e');
+    });
+    </script>
+
+    <div class="year" id="1991">1991</div>
+    <script>
+    $('#1991').click(function() {
+      $('.year').css('color', '#000');
+      loadCongress(102);
+      loadDistricts({state: state, congress: congress});
+      $(this).css('color', '#36c87e');
+    });
+    </script>
+
+    <div class="year" id="1981">1981</div>
+    <script>
+    $('#1981').click(function() {
+      $('.year').css('color', '#000');
+      loadCongress(97);
+      loadDistricts({state: state, congress: congress});
+      $(this).css('color', '#36c87e');
+    });
+    </script>
+  </div>
+
 </body>
 
 </html>

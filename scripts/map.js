@@ -1,7 +1,10 @@
 // D3 Visualization Setup
 var width = document.getElementById('map').offsetWidth;
 var height = document.getElementById('map').offsetHeight;
+var country;
 var centered;
+var state;
+var congress;
 
 var svg = d3.select('#map').append('svg')
   .attr('width', width)
@@ -13,13 +16,53 @@ var projection = d3.geoAlbersUsa()
 
 var path = d3.geoPath().projection(projection);
 
-var g = svg.append('g');
+var g = svg.append('g')
+  .classed('graphic', true);
+
+function clicked(d) {
+  state = d.properties.NAME;
+
+  loadDistricts({
+    state: state,
+    congress: congress
+  });
+
+  var x, y, k;
+
+  // console.log(d3.select(this).attr('class'));
+
+  if (d && centered !== d && d3.select(this).attr('class') !== 'district') {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
+  }
+
+  g.transition()
+    .duration(750)
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")");
+
+  g.selectAll('state')
+    .style('stroke-width', 0.5);
+};
+
+function loadCongress(congressNumber) {
+  congress = congressNumber;
+};
+
+loadCongress(114);
 
 // D3 Visualization Execution
 d3.json('data/states.json', function(error, map) {
   if (error) throw error;
 
-  var country = g.append('g').classed('continent', true);
+  country = g.append('g').classed('country', true);
 
   country.selectAll()
     .data(map.features)
@@ -36,33 +79,29 @@ d3.json('data/states.json', function(error, map) {
     .on("click", clicked);
 });
 
-function clicked(d) {
+// Load Districts into Visualization
+var loadDistricts = function(config) {
   d3.selectAll('.counties').remove();
   d3.selectAll('.districts').remove();
-  d3.select('#titleText').remove();
 
-  state = d.properties.NAME;
-  congress = 114;
+  // State Selector for Visualization
+  var state = config.state;
+  var congress = config.congress;
+
+  // Modify Chart Title
+  d3.select('#titleText').remove();
 
   if (state !== undefined) {
     d3.select('#title')
       .append('p')
       .attr('id', 'titleText')
       .text(congress + 'th Congress, District Map of ' + state);
+  } else {
+    d3.select('#title')
+      .append('p')
+      .attr('id', 'titleText')
+      .text(congress + 'th Congress of the United States');
   };
-
-  loadDistricts({
-    state: state,
-    congress: congress
-  });
-}
-
-// Load Districts into Visualization
-var loadDistricts = function(config) {
-
-  // State Selector for Visualization
-  var state = config.state;
-  var congress = config.congress;
 
   d3.json('data/counties.json', function(error, data) {
     if (error) throw error;
@@ -84,10 +123,10 @@ var loadDistricts = function(config) {
       .append('path')
       .attr('d', path)
       .style('stroke', '#fff')
-      .style('stroke-width', '1')
+      .style('stroke-width', '0.5')
       .style('fill', '#e3e3e3')
       .classed('county', true)
-      .on("click", clicked);
+      // .on("click", clicked);
   });
 
   d3.json('data/districts/' + congress + '.json', function(error, data) {
@@ -110,24 +149,32 @@ var loadDistricts = function(config) {
       .append('path')
       .attr('d', path)
       .style('stroke', '#36c87e')
-      .style('stroke-width', '1')
+      .style('stroke-width', '0.5')
       .style('fill', 'rgba(0, 0, 0, 0)')
       .classed('district', true)
       .on("click", clicked);
   });
 
-  //Download SVG
-  // $('#map').click(function() {
-  //   var svgData = $('svg')[0].outerHTML;
-  //   var svgBlob = new Blob([svgData], {
-  //     type: 'image/svg+xml;charset=utf-8'
-  //   });
-  //   var svgUrl = URL.createObjectURL(svgBlob);
-  //   var downloadLink = document.createElement('a');
-  //   downloadLink.href = svgUrl;
-  //   downloadLink.download = state + '_' + congress + '.svg';
-  //   document.body.appendChild(downloadLink);
-  //   downloadLink.click();
-  //   document.body.removeChild(downloadLink);
-  // });
+  g.selectAll('g').sort(function(a, b) {
+    console.log(a.attr('class'));
+
+    if (a.attr('class') == 'districts') {
+      return 1;
+    };
+  });
 }
+
+//Download SVG
+// $('#map').click(function() {
+//   var svgData = $('svg')[0].outerHTML;
+//   var svgBlob = new Blob([svgData], {
+//     type: 'image/svg+xml;charset=utf-8'
+//   });
+//   var svgUrl = URL.createObjectURL(svgBlob);
+//   var downloadLink = document.createElement('a');
+//   downloadLink.href = svgUrl;
+//   downloadLink.download = state + '_' + congress + '.svg';
+//   document.body.appendChild(downloadLink);
+//   downloadLink.click();
+//   document.body.removeChild(downloadLink);
+// });
