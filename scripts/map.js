@@ -16,7 +16,7 @@ var path = d3.geoPath().projection(projection);
 var g = svg.append('g');
 
 // D3 Visualization Execution
-d3.json('/data/states.json', function(error, map) {
+d3.json('data/states.json', function(error, map) {
   if (error) throw error;
 
   var country = g.append('g').classed('continent', true);
@@ -64,7 +64,7 @@ var loadDistricts = function(config) {
   var state = config.state;
   var congress = config.congress;
 
-  d3.json('/data/counties.json', function(error, data) {
+  d3.json('data/counties.json', function(error, data) {
     if (error) throw error;
 
     var counties = g.append('g').classed('counties', true);
@@ -90,7 +90,7 @@ var loadDistricts = function(config) {
       .on("click", clicked);
   });
 
-  d3.json('/data/districts/' + congress + '.json', function(error, data) {
+  d3.json('data/districts/' + congress + '.json', function(error, data) {
     if (error) throw error;
 
     var districts = g.append('g').classed('districts', true);
