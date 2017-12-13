@@ -2,79 +2,117 @@
 
 <head>
   <!-- Metadata -->
-  <title>Congressional Districts</title>
-  <link href="styles/stylesheet.css" rel="stylesheet" type="text/css" />
+  <title>District Visualizer</title>
+  <link href="styles/stylesheet.css" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/ico" href="favicon.ico">
   <!-- Libraries -->
   <script src="scripts/jquery-3.2.1.min.js"></script>
   <script src="scripts/d3.v4.min.js"></script>
 </head>
 
 <body>
-  <div id="title"><p id="titleText">Congressional Districts</p></div>
+  <div id="title">
+    <p id="titleText">Congressional District Visualization</p>
+  </div>
   <div class="chart" id="map"></div>
   <script src="scripts/map.js"></script>
-  <div class="credits">Created by Atthar Mirza. District data from <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">Jeffrey B. Lewis at UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON" target="_blank">Eric Celeste</a>. Last Updated on 12/11/2017</div>
+  <div class="credits">Created by Atthar Mirza. District data from <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">Jeffrey B. Lewis at UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON" target="_blank">Eric Celeste</a>. Last updated on 12/12/2017.</div>
   <div class="timeline">
-    <div class="year" id="2015">2015</div>
-    <script>
-    $('#2015').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(114);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+    <div class="timelineList">
+      <div class="year" id="2015">2015</div>
+      <script>
+        $('#2015').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(114);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
 
-    <div class="year" id="2001">2001</div>
-    <script>
-    $('#2001').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(107);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+      <div class="year" id="2001">2001</div>
+      <script>
+        $('#2001').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(107);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
 
-    <div class="year" id="1991">1991</div>
-    <script>
-    $('#1991').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(102);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+      <div class="year" id="1991">1991</div>
+      <script>
+        $('#1991').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(102);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
 
-    <div class="year" id="1981">1981</div>
-    <script>
-    $('#1981').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(97);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+      <div class="year" id="1981">1981</div>
+      <script>
+        $('#1981').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(97);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
 
-    <div class="year" id="1971">1971</div>
-    <script>
-    $('#1971').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(92);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+      <div class="year" id="1971">1971</div>
+      <script>
+        $('#1971').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(92);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
 
-    <div class="year" id="1961">1961</div>
-    <script>
-    $('#1961').click(function() {
-      $('.year').css('color', '#000');
-      loadCongress(87);
-      loadDistricts({state: state, congress: congress});
-      $(this).css('color', '#36c87e');
-    });
-    </script>
+      <div class="year" id="1961">1961</div>
+      <script>
+        $('#1961').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(87);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
+
+      <div class="year" id="1949">1949</div>
+      <script>
+        $('#1949').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(81);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
+    </div>
   </div>
+  <div class="timelineFade"></div>
+  <div class="footer"></div>
 
 </body>
 

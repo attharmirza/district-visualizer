@@ -36,7 +36,7 @@ function clicked(d) {
 
   // console.log(d3.select(this).attr('class'));
 
-  if (d && centered !== d && d3.select(this).attr('class') !== 'district') {
+  if (d && centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
     var centroid = path.centroid(d);
     x = centroid[0];
     y = centroid[1];
@@ -113,7 +113,7 @@ var loadCounties = function(config) {
       .style('stroke-width', '0.5')
       .style('fill', '#e3e3e3')
       .classed('county', true)
-    // .on("click", clicked);
+      .on("click", clicked);
   });
 }
 
@@ -130,12 +130,10 @@ var loadDistricts = function(config) {
 
   var congressParse = congress.toString().substring(congress.toString().length - 2, congress.toString().length);
 
-  console.log(congressParse);
-
   // All this huge chunk of code does is decide whether
   // the number should have a "st", "nd" or "th" after
   // it. What the hell am I doing with my life.
-  if (congressParse == '01') {
+  if (congressParse.substring(1) == '1' && congressParse !== '11') {
     if (state !== undefined) {
       d3.select('#title')
         .append('p')
@@ -148,7 +146,7 @@ var loadDistricts = function(config) {
         .text(congress + 'st Congress of the United States');
     };
   // } else if (congressParse == '02' || congressParse == '22' || congressParse == '32' || congressParse == '42' || congressParse == '52' || congressParse == '62' || congressParse == '72' || congressParse == '82' || congressParse == '92') {
-  } else if (congressParse.substring(1) == 2 && congressParse !== '12') {
+  } else if (congressParse.substring(1) == '2' && congressParse !== '12') {
     if (state !== undefined) {
       d3.select('#title')
         .append('p')
