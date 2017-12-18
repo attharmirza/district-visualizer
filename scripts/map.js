@@ -4,6 +4,7 @@ var height = document.getElementById('map').offsetHeight;
 var country;
 var centered;
 var state;
+var stateCompactness = {};
 var congress;
 
 var svg = d3.select('#map').append('svg')
@@ -34,8 +35,6 @@ function clicked(d) {
 
   var x, y, k;
 
-  // console.log(d3.select(this).attr('class'));
-
   if (d && centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
     var centroid = path.centroid(d);
     x = centroid[0];
@@ -50,7 +49,7 @@ function clicked(d) {
   }
 
   g.transition()
-    .duration(750)
+    .duration(400)
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")");
 
   g.selectAll('state')
@@ -62,6 +61,45 @@ function loadCongress(congressNumber) {
 };
 
 loadCongress(114);
+
+d3.csv('data/compactness.csv', function(error, data) {
+  var states = [];
+  var averages = [];
+  var compactnessByState = d3.nest()
+    .key(function(d) {
+      return d.district.substring(0, 2);
+    })
+    .entries(data);
+
+  for (i = 0; i < compactnessByState.length; i++) {
+    var obj = compactnessByState[i];
+    states.push(obj.key);
+  };
+
+  for (i = 0; i < compactnessByState.length; i++) {
+    var obj = compactnessByState[i];
+    var compactness = [];
+
+    for (f = 0; f < obj.values.length; f++) {
+      compactness.push(obj.values[f].compactness);
+    };
+
+    // console.log(compactness);
+    var sum = compactness.reduce(function(total, num) {
+      return parseFloat(total) + parseFloat(num);
+    })
+    averages.push(sum / obj.values.length);
+  };
+
+  // console.log(states);
+  // console.log(averages);
+
+  for (i = 0; i < states.length; i++) {
+    stateCompactness[states[i]] = averages[i];
+  };
+
+  // console.log(stateCompactness);
+});
 
 // D3 Visualization Execution
 d3.json('data/states.json', function(error, map) {
@@ -76,12 +114,20 @@ d3.json('data/states.json', function(error, map) {
     .attr('d', path)
     .style('stroke', '#fff')
     .style('stroke-width', '1')
-    // .style('fill', '#f2f2f2')
+    .style('opacity', function(d) {
+      if (stateCompactness[d.properties.ABBR] !== 1) {
+        return 1 - stateCompactness[d.properties.ABBR] * 2;
+      } else {
+        return 0.05;
+      }
+    })
     .classed('state', true)
     .attr('id', function(d) {
-      return d.properties.NAME;
+      return d.properties.ABBR;
     })
-    .on("click", clicked);
+    .on('mouseenter', stateMouseEnter)
+    .on('mouseleave', stateMouseExit)
+    .on('click', clicked);
 });
 
 // Load Counties into Visualization
@@ -111,7 +157,7 @@ var loadCounties = function(config) {
       .attr('d', path)
       .style('stroke', '#fff')
       .style('stroke-width', '0.5')
-      .style('fill', '#e3e3e3')
+      .style('fill', '#c1f7dc')
       .classed('county', true)
       .on("click", clicked);
   });
@@ -127,6 +173,12 @@ var loadDistricts = function(config) {
 
   // Modify Chart Title
   d3.select('#titleText').remove();
+
+  if (state !== undefined) {
+    d3.select('.legend').style('display', 'none');
+  } else {
+    d3.select('.legend').style('display', 'block');
+  }
 
   var congressParse = congress.toString().substring(congress.toString().length - 2, congress.toString().length);
 
@@ -144,8 +196,9 @@ var loadDistricts = function(config) {
         .append('p')
         .attr('id', 'titleText')
         .text(congress + 'st Congress of the United States');
+      // d3.select('.legend').style('display', 'block');
     };
-  // } else if (congressParse == '02' || congressParse == '22' || congressParse == '32' || congressParse == '42' || congressParse == '52' || congressParse == '62' || congressParse == '72' || congressParse == '82' || congressParse == '92') {
+    // } else if (congressParse == '02' || congressParse == '22' || congressParse == '32' || congressParse == '42' || congressParse == '52' || congressParse == '62' || congressParse == '72' || congressParse == '82' || congressParse == '92') {
   } else if (congressParse.substring(1) == '2' && congressParse !== '12') {
     if (state !== undefined) {
       d3.select('#title')
@@ -157,6 +210,7 @@ var loadDistricts = function(config) {
         .append('p')
         .attr('id', 'titleText')
         .text(congress + 'nd Congress of the United States');
+      // d3.select('.legend').style('display', 'block');
     };
   } else {
     if (state !== undefined) {
@@ -169,6 +223,7 @@ var loadDistricts = function(config) {
         .append('p')
         .attr('id', 'titleText')
         .text(congress + 'th Congress of the United States');
+      // d3.select('.legend').style('display', 'block');
     };
   };
 
@@ -199,6 +254,21 @@ var loadDistricts = function(config) {
   });
 }
 
+// Make Visualization Interact w/ Pointer
+function stateMouseEnter(d) {
+  d3.select(this).style('opacity', 1);
+}
+
+function stateMouseExit(d) {
+  d3.select(this).style('opacity', function(d) {
+    if (stateCompactness[d.properties.ABBR] !== 1) {
+      return 1 - stateCompactness[d.properties.ABBR] * 2;
+    } else {
+      return 0.05;
+    }
+  });
+}
+
 //Download SVG
 // $('#map').click(function() {
 //   var svgData = $('svg')[0].outerHTML;
@@ -212,4 +282,4 @@ var loadDistricts = function(config) {
 //   document.body.appendChild(downloadLink);
 //   downloadLink.click();
 //   document.body.removeChild(downloadLink);
-// });
+// });s

@@ -1,10 +1,12 @@
 /*Base*/
+
 html, body {
   margin: 0;
   padding: 0;
 }
 
 /*Chart Formatting*/
+
 .chart {
   width: 100%;
   height: 100%;
@@ -12,11 +14,12 @@ html, body {
 }
 
 .state {
-  fill: #f2f2f2;
+  /* fill: #f2f2f2; */
+  fill: #9a9a9a;
 }
 
 .state:hover {
-  fill: #e3e3e3;
+  fill: #c1f7dc;
 }
 
 g:hover {
@@ -24,6 +27,7 @@ g:hover {
 }
 
 /*Title Formatting*/
+
 #title {
   position: absolute;
   z-index: 1;
@@ -33,17 +37,89 @@ g:hover {
   width: 100%;
 }
 
-#title p {
+#titleText {
   font-size: 1.3em;
   font-family: sans-serif;
   text-align: center;
   font-weight: 100;
 }
 
+/*Legend Formatting*/
+
+.legend {
+  position: absolute;
+  bottom: calc(5% + 35px);
+  left: 50%;
+  transform: translateX(-50%);
+  /* top: 20px; */
+  /* left: 15px; */
+  font-size: 0.8em;
+  font-family: sans-serif;
+  text-align: center;
+  font-weight: 100;
+  width: 250px;
+  /* height: 20px; */
+  margin: auto;
+  /* background-color: #e2e2e2; */
+}
+
+.legendTitle {
+  position: absolute;
+  top: -20;
+  left: 8;
+}
+
+.legendColors {
+  margin: 6 0;
+  width: 100%;
+  text-align: center;
+}
+
+.legendBar {
+  display: inline-block;
+  width: 22%;
+  height: 5px;
+  /* background-color: #b93131; */
+}
+
+#cell1 {
+  background-color: #9a9a9a;
+  opacity: 0.1;
+}
+
+#cell2 {
+  background-color: #9a9a9a;
+  opacity: 0.35;
+}
+
+#cell3 {
+  background-color: #9a9a9a;
+  opacity: 0.65;
+}
+
+#cell4 {
+  background-color: #9a9a9a;
+  opacity: 1;
+}
+
+.legendLabel {
+  top: 10px;
+  position: absolute;
+}
+
+#least {
+  left: 8;
+}
+
+#most {
+  right: 8;
+}
+
 /*Timeline and Credits Formatting*/
+
 .credits {
   position: absolute;
-  bottom: 15px;
+  bottom: 10px;
   right: 20px;
   z-index: 1;
   font-size: 0.5em;
@@ -59,7 +135,7 @@ g:hover {
   width: calc(100% - 550px);
   bottom: 10px;
   left: 10px;
-  height: 20px;
+  height: 17px;
 }
 
 .timelineFade {
@@ -73,7 +149,7 @@ g:hover {
 }
 
 .timelineList {
-  min-width: 500px;
+  min-width: 450px;
 }
 
 .footer {
