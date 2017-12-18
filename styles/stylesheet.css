@@ -48,11 +48,11 @@ g:hover {
 
 .legend {
   position: absolute;
-  bottom: calc(5% + 35px);
-  left: 50%;
-  transform: translateX(-50%);
-  /* top: 20px; */
-  /* left: 15px; */
+  /* bottom: calc(5% + 60px); */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  bottom: 4px;
+  left: 20px;
   font-size: 0.8em;
   font-family: sans-serif;
   text-align: center;
@@ -65,8 +65,10 @@ g:hover {
 
 .legendTitle {
   position: absolute;
-  top: -20;
-  left: 8;
+  bottom: 10;
+  /* left: 8px; */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .legendColors {
@@ -103,23 +105,24 @@ g:hover {
 }
 
 .legendLabel {
-  top: 10px;
+  bottom: 10px;
   position: absolute;
+  font-style: italic;
 }
 
 #least {
-  left: 8;
+  left: 10;
 }
 
 #most {
-  right: 8;
+  right: 10;
 }
 
 /*Timeline and Credits Formatting*/
 
 .credits {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   right: 20px;
   z-index: 1;
   font-size: 0.5em;
@@ -136,6 +139,8 @@ g:hover {
   bottom: 10px;
   left: 10px;
   height: 17px;
+
+  display: none;
 }
 
 .timelineFade {

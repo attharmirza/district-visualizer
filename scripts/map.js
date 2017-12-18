@@ -176,8 +176,10 @@ var loadDistricts = function(config) {
 
   if (state !== undefined) {
     d3.select('.legend').style('display', 'none');
+    d3.select('.timeline').style('display', 'block');
   } else {
     d3.select('.legend').style('display', 'block');
+    d3.select('.timeline').style('display', 'none');
   }
 
   var congressParse = congress.toString().substring(congress.toString().length - 2, congress.toString().length);
