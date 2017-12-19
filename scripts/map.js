@@ -173,6 +173,7 @@ var loadDistricts = function(config) {
 
   // Modify Chart Title
   d3.select('#titleText').remove();
+  d3.select('#intro').remove();
 
   if (state !== undefined) {
     d3.select('.legend').style('display', 'none');
