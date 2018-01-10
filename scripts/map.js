@@ -28,10 +28,19 @@ function clicked(d) {
     congress: congress
   });
 
-  loadDistricts({
-    state: state,
-    congress: congress
-  });
+  if (d && centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
+    setTimeout(function() {
+      loadDistricts({
+        state: state,
+        congress: congress
+      });
+    }, 500)
+  } else {
+    loadDistricts({
+      state: state,
+      congress: congress
+    });
+  };
 
   var x, y, k;
 
@@ -39,14 +48,20 @@ function clicked(d) {
     var centroid = path.centroid(d);
     x = centroid[0];
     y = centroid[1];
-    k = 4;
+    if (state == 'Texas' || state == 'California' || state == 'Nevada') {
+      k = 3;
+    } else if (state == 'Maryland' || state == 'Rhode Island' || state == 'Delaware' || state == 'New Jersey') {
+      k = 5;
+    } else {
+      k = 4;
+    };
     centered = d;
   } else {
     x = width / 2;
     y = height / 2;
     k = 1;
     centered = null;
-  }
+  };
 
   g.transition()
     .duration(400)
@@ -60,7 +75,7 @@ function loadCongress(congressNumber) {
   congress = congressNumber;
 };
 
-loadCongress(114);
+loadCongress(115);
 
 d3.csv('data/compactness.csv', function(error, data) {
   var states = [];
@@ -119,7 +134,7 @@ d3.json('data/states.json', function(error, map) {
         return 1 - stateCompactness[d.properties.ABBR] * 2;
       } else {
         return 0.05;
-      }
+      };
     })
     .classed('state', true)
     .attr('id', function(d) {
@@ -147,8 +162,8 @@ var loadCounties = function(config) {
     for (var i = 0; i < length; i++) {
       if (data.features[i].properties.STATE == state) {
         stateCounties.push(data.features[i]);
-      }
-    }
+      };
+    };
 
     counties.selectAll('path')
       .data(stateCounties)
@@ -161,7 +176,7 @@ var loadCounties = function(config) {
       .classed('county', true)
       .on("click", clicked);
   });
-}
+};
 
 // Load Districts into Visualization
 var loadDistricts = function(config) {
@@ -181,7 +196,7 @@ var loadDistricts = function(config) {
   } else {
     d3.select('.legend').style('display', 'block');
     d3.select('.timeline').style('display', 'none');
-  }
+  };
 
   var congressParse = congress.toString().substring(congress.toString().length - 2, congress.toString().length);
 
@@ -230,37 +245,58 @@ var loadDistricts = function(config) {
     };
   };
 
-  d3.json('data/districts/' + congress + '.json', function(error, data) {
+  d3.csv('data/codes.csv', function(error, data) {
     if (error) throw error;
 
-    var districts = g.append('g').classed('districts', true);
+    var stateCode;
 
-    var length = data.features.length;
-    var stateDistricts = [];
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].State == state) {
+        stateCode = data[i].Code;
+        console.log(stateCode)
+      };
+    };
 
-    for (var i = 0; i < length; i++) {
-      if (data.features[i].properties.STATENAME == state) {
-        stateDistricts.push(data.features[i]);
-      }
-    }
+    d3.json('data/districts/' + congress + '.json', function(error, data) {
+      if (error) throw error;
 
-    districts.selectAll('path')
-      .data(stateDistricts)
-      .enter()
-      .append('path')
-      .attr('d', path)
-      .style('stroke', '#36c87e')
-      .style('stroke-width', '0.5')
-      .style('fill', 'rgba(0, 0, 0, 0)')
-      .classed('district', true)
-      .on("click", clicked);
+      var districts = g.append('g').classed('districts', true);
+
+      var length = data.features.length;
+      var stateDistricts = [];
+
+      console.log(stateCode);
+      for (var i = 0; i < length; i++) {
+        console.log(stateCode);
+        if (data.features[i].properties.STATEFP !== undefined) {
+          if (data.features[i].properties.STATEFP == stateCode) {
+            stateDistricts.push(data.features[i]);
+          };
+        } else {
+          if (data.features[i].properties.STATENAME == state) {
+            stateDistricts.push(data.features[i]);
+          }
+        }
+      };
+
+      districts.selectAll('path')
+        .data(stateDistricts)
+        .enter()
+        .append('path')
+        .attr('d', path)
+        .style('stroke', '#36c87e')
+        .style('stroke-width', '0.5')
+        .style('fill', 'rgba(0, 0, 0, 0)')
+        .classed('district', true)
+        .on("click", clicked);
+    });
   });
-}
+};
 
 // Make Visualization Interact w/ Pointer
 function stateMouseEnter(d) {
   d3.select(this).style('opacity', 1);
-}
+};
 
 function stateMouseExit(d) {
   d3.select(this).style('opacity', function(d) {
@@ -268,9 +304,9 @@ function stateMouseExit(d) {
       return 1 - stateCompactness[d.properties.ABBR] * 2;
     } else {
       return 0.05;
-    }
+    };
   });
-}
+};
 
 //Download SVG
 // $('#map').click(function() {
@@ -285,4 +321,4 @@ function stateMouseExit(d) {
 //   document.body.appendChild(downloadLink);
 //   downloadLink.click();
 //   document.body.removeChild(downloadLink);
-// });s
+// });

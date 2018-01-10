@@ -163,7 +163,7 @@ g:hover {
   width: calc(100% - 730px);
   bottom: 10px;
   left: 10px;
-  height: 17px;
+  /* min-height: 17px; */
 
   display: none;
 }
@@ -179,7 +179,7 @@ g:hover {
 }
 
 .timelineList {
-  min-width: 450px;
+  min-width: 800px;
 }
 
 .footer {
@@ -209,6 +209,6 @@ g:hover {
   cursor: pointer;
 }
 
-[id="2015"] {
+[id="2017"] {
   color: #36c87e;
 }

@@ -31,14 +31,40 @@
   </div>
   <div class="chart" id="map"></div>
   <script src="scripts/map.js"></script>
-  <div class="credits">Created by Atthar Mirza. District data from <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">Jeffrey B. Lewis at UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON" target="_blank">Eric Celeste</a>. Compactness analysis by <a href="https://github.com/jeffreyshen19/Is-My-District-Gerrymandered" target="_blank">Jeffrey Shen</a>. Last updated on 12/18/2017.</div>
+  <div class="credits">District data from <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_cds.html" targe="_blank">United States Censu Bureau</a> and <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON" target="_blank">Eric Celeste</a>. Compactness analysis by <a href="https://github.com/jeffreyshen19/Is-My-District-Gerrymandered" target="_blank">Jeffrey Shen</a>. Last updated on 01/10/2018.</div>
   <div class="timeline">
     <div class="timelineList">
+      <div class="year" id="2017">2017</div>
+      <script>
+        $('#2017').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(115);;
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
+
       <div class="year" id="2015">2015</div>
       <script>
         $('#2015').click(function() {
           $('.year').css('color', '#000');
           loadCongress(114);
+          loadDistricts({
+            state: state,
+            congress: congress
+          });
+          $(this).css('color', '#36c87e');
+        });
+      </script>
+
+      <div class="year" id="2013">2013</div>
+      <script>
+        $('#2013').click(function() {
+          $('.year').css('color', '#000');
+          loadCongress(113);
           loadDistricts({
             state: state,
             congress: congress
