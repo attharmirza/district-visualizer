@@ -161,8 +161,8 @@ g:hover {
   overflow: auto;
   z-index: 1;
   width: calc(100% - 730px);
-  bottom: 10px;
-  left: 10px;
+  bottom: 7px;
+  left: 20px;
   /* min-height: 17px; */
 
   display: none;
@@ -179,7 +179,8 @@ g:hover {
 }
 
 .timelineList {
-  min-width: 800px;
+  min-width: 520px;
+  padding-bottom: 3px;
 }
 
 .footer {
@@ -196,7 +197,7 @@ g:hover {
   /*position: absolute;*/
   display: inline-block;
   /*bottom: 0;*/
-  margin: 0 10px 0 10px;
+  margin: 0 20px 0 0;
   font-family: sans-serif;
   font-weight: 100;
   text-align: center;
@@ -205,10 +206,27 @@ g:hover {
   /*border-radius: 5px;*/
 }
 
+[id="1949"] {
+  margin: 0 0 0 0;
+}
+
 .year:hover {
   cursor: pointer;
 }
 
 [id="2017"] {
   color: #36c87e;
+}
+
+/* Custom Timeline Scrollbar */
+.timeline::-webkit-scrollbar {
+  height: 3px;
+}
+
+.timeline::-webkit-scrollbar-track {
+  background: #f2f2f2;
+}
+
+.timeline::-webkit-scrollbar-thumb {
+  background: #36c87e;
 }
