@@ -197,7 +197,7 @@ g:hover {
   /*position: absolute;*/
   display: inline-block;
   /*bottom: 0;*/
-  margin: 0 20px 0 0;
+  margin: 0 18px 0 2px;
   font-family: sans-serif;
   font-weight: 100;
   text-align: center;
