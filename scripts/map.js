@@ -28,19 +28,24 @@ function clicked(d) {
     congress: congress
   });
 
-  if (d && centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
-    setTimeout(function() {
-      loadDistricts({
-        state: state,
-        congress: congress
-      });
-    }, 500)
-  } else {
-    loadDistricts({
-      state: state,
-      congress: congress
-    });
-  };
+  // if (/*d &&*/ centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
+  //   setTimeout(function() {
+  //     loadDistricts({
+  //       state: state,
+  //       congress: congress
+  //     });
+  //   }, 500)
+  // } else {
+  //   loadDistricts({
+  //     state: state,
+  //     congress: congress
+  //   });
+  // };
+
+  loadDistricts({
+    state: state,
+    congress: congress
+  });
 
   var x, y, k;
 
@@ -146,36 +151,73 @@ d3.json('data/states.json', function(error, map) {
 });
 
 // Load Counties into Visualization
+d3.json('data/counties.json', function(error, data) {
+  if (error) throw error;
+
+  var counties = g.append('g').classed('counties', true);
+
+  // var length = data.features.length;
+  // var stateCounties = [];
+  //
+  // for (var i = 0; i < length; i++) {
+  //   if (data.features[i].properties.STATE == state) {
+  //     stateCounties.push(data.features[i]);
+  //   };
+  // };
+
+  counties.selectAll('path')
+    .data(data.features)
+    .enter()
+    .append('path')
+    .attr('d', path)
+    .style('stroke', '#fff')
+    .style('stroke-width', '0.5')
+    .style('fill', '#c1f7dc')
+    // .classed('county', true)
+    .attr('class', function(d) {
+      var state = d.properties.STATE;
+      var stateNoSpace = state.replace(/\s/g, '');
+      return 'county ' + stateNoSpace;
+    })
+    .on("click", clicked);
+});
+
 var loadCounties = function(config) {
-  var state = config.state;
+  d3.selectAll('.county').style('display', 'none');
 
-  d3.selectAll('.counties').remove();
+  var state = '.' + config.state;
+  var stateNoSpace = state.replace(/\s/g, '');
 
-  d3.json('data/counties.json', function(error, data) {
-    if (error) throw error;
+  console.log(state);
+  console.log(stateNoSpace);
 
-    var counties = g.append('g').classed('counties', true);
+  d3.selectAll(stateNoSpace).style('display', 'block');
 
-    var length = data.features.length;
-    var stateCounties = [];
-
-    for (var i = 0; i < length; i++) {
-      if (data.features[i].properties.STATE == state) {
-        stateCounties.push(data.features[i]);
-      };
-    };
-
-    counties.selectAll('path')
-      .data(stateCounties)
-      .enter()
-      .append('path')
-      .attr('d', path)
-      .style('stroke', '#fff')
-      .style('stroke-width', '0.5')
-      .style('fill', '#c1f7dc')
-      .classed('county', true)
-      .on("click", clicked);
-  });
+  // d3.json('data/counties.json', function(error, data) {
+  //   if (error) throw error;
+  //
+  //   var counties = g.append('g').classed('counties', true);
+  //
+  //   var length = data.features.length;
+  //   var stateCounties = [];
+  //
+  //   for (var i = 0; i < length; i++) {
+  //     if (data.features[i].properties.STATE == state) {
+  //       stateCounties.push(data.features[i]);
+  //     };
+  //   };
+  //
+  //   counties.selectAll('path')
+  //     .data(stateCounties)
+  //     .enter()
+  //     .append('path')
+  //     .attr('d', path)
+  //     .style('stroke', '#fff')
+  //     .style('stroke-width', '0.5')
+  //     .style('fill', '#c1f7dc')
+  //     .classed('county', true)
+  //     .on("click", clicked);
+  // });
 };
 
 // Load Districts into Visualization
@@ -253,7 +295,7 @@ var loadDistricts = function(config) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].State == state) {
         stateCode = data[i].Code;
-        console.log(stateCode)
+        // console.log(stateCode)
       };
     };
 
@@ -265,9 +307,9 @@ var loadDistricts = function(config) {
       var length = data.features.length;
       var stateDistricts = [];
 
-      console.log(stateCode);
+      // console.log(stateCode);
       for (var i = 0; i < length; i++) {
-        console.log(stateCode);
+        // console.log(stateCode);
         if (data.features[i].properties.STATEFP !== undefined) {
           if (data.features[i].properties.STATEFP == stateCode) {
             stateDistricts.push(data.features[i]);

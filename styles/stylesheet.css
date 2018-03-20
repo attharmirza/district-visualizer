@@ -26,6 +26,10 @@ g:hover {
   cursor: pointer;
 }
 
+.county {
+  display: none;
+}
+
 /*Title Formatting*/
 
 #title {
