@@ -51,6 +51,10 @@ g:hover {
   transition: 0.5s;
 }
 
+.titleShadow:hover {
+  opacity: 0.2;
+}
+
 #titleText {
   font-size: 1.3em;
   font-family: sans-serif;
@@ -229,7 +233,7 @@ g:hover {
 }
 
 [id="2017"] {
-  color: #36c87e;
+  color: #31C6CC;
 }
 
 /* Custom Timeline Scrollbar */
@@ -242,5 +246,5 @@ g:hover {
 }
 
 .timeline::-webkit-scrollbar-thumb {
-  background: #36c87e;
+  background: #31C6CC;
 }
