@@ -28,24 +28,35 @@ function clicked(d) {
     congress: congress
   });
 
-  // if (/*d &&*/ centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
-  //   setTimeout(function() {
-  //     loadDistricts({
-  //       state: state,
-  //       congress: congress
-  //     });
-  //   }, 500)
-  // } else {
+  if (d && centered !== d && d3.select(this).attr('class') !== 'district' && d3.select(this).attr('class') !== 'county') {
+    setTimeout(function() {
+      loadDistricts({
+        state: state,
+        congress: congress
+      });
+    }, 500)
+
+    d3.select('#title').classed('titleShadow', true);
+  } else {
+    loadDistricts({
+      state: state,
+      congress: congress
+    });
+
+    d3.select('#title').classed('titleShadow', false);
+  };
+
+  // setTimeout(function() {
   //   loadDistricts({
   //     state: state,
   //     congress: congress
   //   });
-  // };
+  // }, 3000)
 
-  loadDistricts({
-    state: state,
-    congress: congress
-  });
+  // loadDistricts({
+  //   state: state,
+  //   congress: congress
+  // });
 
   var x, y, k;
 
@@ -69,7 +80,7 @@ function clicked(d) {
   };
 
   g.transition()
-    .duration(400)
+    .duration(500)
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")");
 
   g.selectAll('state')
@@ -172,7 +183,7 @@ d3.json('data/counties.json', function(error, data) {
     .attr('d', path)
     .style('stroke', '#fff')
     .style('stroke-width', '0.5')
-    .style('fill', '#c1f7dc')
+    .style('fill', '#adfcff')
     // .classed('county', true)
     .attr('class', function(d) {
       var state = d.properties.STATE;
@@ -326,7 +337,7 @@ var loadDistricts = function(config) {
         .enter()
         .append('path')
         .attr('d', path)
-        .style('stroke', '#36c87e')
+        .style('stroke', '#31C6CC')
         .style('stroke-width', '0.5')
         .style('fill', 'rgba(0, 0, 0, 0)')
         .classed('district', true)

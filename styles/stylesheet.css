@@ -19,7 +19,7 @@ html, body {
 }
 
 .state:hover {
-  fill: #c1f7dc;
+  fill: #adfcff;
 }
 
 g:hover {
@@ -38,7 +38,17 @@ g:hover {
   top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
+  /* width: 100%; */
+  background: #fff;
+  padding: 0 20;
+  border-radius: 5px;
+  /* box-shadow: 0 0 60px 3px rgba(0, 0, 0, 0.15); */
+  transition: 0.5s;
+}
+
+.titleShadow {
+  box-shadow: 0 0 60px 3px rgba(0, 0, 0, 0.15);
+  transition: 0.5s;
 }
 
 #titleText {
