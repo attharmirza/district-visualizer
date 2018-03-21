@@ -4,7 +4,7 @@
   <!-- Metadata -->
   <title>District Visualizer</title>
   <link href="styles/stylesheet.css" rel="stylesheet" type="text/css">
-  <!-- <link rel="icon" type="image/ico" href="favicon.ico"> -->
+  <link rel="icon" type="image/ico" href="favicon.ico">
   <meta name="viewport" content="initial-scale=1.0, width=device-width" />
   <!-- Libraries -->
   <script src="scripts/jquery-3.2.1.min.js"></script>
@@ -12,149 +12,195 @@
 </head>
 
 <body>
-  <div id="title">
-    <p id="titleText">Congressional District Visualization</p>
-  </div>
-  <div id="intro">
-    <!-- <p id="introText">Click on a state to view district shapes. Then use the timeline to see changes and the effects of gerrymandering.</p> -->
-  </div>
-  <div class="legend">
-    <div class="legendColors">
-      <div class="legendBar" id="cell1"></div>
-      <div class="legendBar" id="cell2"></div>
-      <div class="legendBar" id="cell3"></div>
-      <div class="legendBar" id="cell4"></div>
+  <div class="content">
+    <div class="titleBox">
+      <div id="title">
+        <p id="titleText">Congressional District Visualization</p>
+      </div>
     </div>
-    <p class="legendTitle">Gerrymandering</p>
-    <p class="legendLabel" id="least">Least</p>
-    <p class="legendLabel" id="most">Most</p>
-  </div>
-  <div class="chart" id="map"></div>
-  <script src="scripts/map.js"></script>
-  <div class="credits">District data from <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_cds.html" targe="_blank">United States Census Bureau</a> and <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON" target="_blank">Eric Celeste</a>. Compactness analysis by <a href="https://github.com/jeffreyshen19/Is-My-District-Gerrymandered" target="_blank">Jeffrey Shen</a>. Last updated on 01/10/2018.</div>
-  <div class="timeline">
-    <div class="timelineList">
-      <div class="year" id="2017">2017</div>
-      <script>
-        $('#2017').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(115);;
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="2015">2015</div>
-      <script>
-        $('#2015').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(114);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="2013">2013</div>
-      <script>
-        $('#2013').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(113);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="2001">2001</div>
-      <script>
-        $('#2001').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(107);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="1991">1991</div>
-      <script>
-        $('#1991').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(102);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="1981">1981</div>
-      <script>
-        $('#1981').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(97);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="1971">1971</div>
-      <script>
-        $('#1971').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(92);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="1961">1961</div>
-      <script>
-        $('#1961').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(87);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
-
-      <div class="year" id="1949">1949</div>
-      <script>
-        $('#1949').click(function() {
-          $('.year').css('color', '#000');
-          loadCongress(81);
-          loadDistricts({
-            state: state,
-            congress: congress
-          });
-          $(this).css('color', '#31C6CC');
-        });
-      </script>
+    <div id="download">
+      <img class="svgImage" src="graphics/download.svg">
     </div>
+    <a href="https://www.theatlantic.com/">
+      <div id="logo">
+        <img class="svgImage" src="graphics/logo.svg">
+      </div>
+    </a>
+    <div id="intro">
+      <!-- <p id="introText">Click on a state to view district shapes. Then use the timeline to see changes and the effects of gerrymandering.</p> -->
+    </div>
+    <div class="legend">
+      <div class="legendColors">
+        <div class="legendBar" id="cell1"></div>
+        <div class="legendBar" id="cell2"></div>
+        <div class="legendBar" id="cell3"></div>
+        <div class="legendBar" id="cell4"></div>
+      </div>
+      <p class="legendTitle">Gerrymandering</p>
+      <p class="legendLabel" id="least">Least</p>
+      <p class="legendLabel" id="most">Most</p>
+    </div>
+    <div class="chart" id="map"></div>
+    <script src="scripts/map.js"></script>
+    <div class="credits">District data from <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_cds.html" targe="_blank">United States Census Bureau</a> and <a href="http://cdmaps.polisci.ucla.edu/" target="_blank">UCLA</a>. State data from <a href="http://eric.clst.org/Stuff/USGeoJSON"
+        target="_blank">Eric Celeste</a>. Compactness analysis by <a href="https://github.com/jeffreyshen19/Is-My-District-Gerrymandered" target="_blank">Jeffrey Shen</a>. Last updated on 01/10/2018.</div>
+    <div class="timeline">
+      <div class="timelineList">
+        <div class="year" id="2018">2018</div>
+        <script>
+          $('#2018').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(115);;
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="2015">2015</div>
+        <script>
+          $('#2015').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(114);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="2013">2013</div>
+        <script>
+          $('#2013').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(113);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="2001">2001</div>
+        <script>
+          $('#2001').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(107);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="1991">1991</div>
+        <script>
+          $('#1991').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(102);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="1981">1981</div>
+        <script>
+          $('#1981').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(97);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="1971">1971</div>
+        <script>
+          $('#1971').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(92);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="1961">1961</div>
+        <script>
+          $('#1961').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(87);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+
+        <div class="year" id="1949">1949</div>
+        <script>
+          $('#1949').click(function() {
+            $('.year').css('color', '#000');
+            loadCongress(81);
+            loadDistricts({
+              state: state,
+              congress: congress
+            });
+            $(this).css('color', '#31C6CC');
+          });
+        </script>
+      </div>
+    </div>
+
+    <!-- <div class="timelineFade"></div> -->
+    <div class="footer"></div>
   </div>
 
-  <!-- <div class="timelineFade"></div> -->
-  <div class="footer"></div>
+  <div class="errorText">
+    <p id="titleText">Please View on a Larger Screen</p>
+  </div>
+
+  <script>
+    $('#download').height(function() {
+      return $('.titleBox').height();
+    })
+
+    $('#download').width(function() {
+      return $('.titleBox').height();
+    })
+
+    $('#logo').height(function() {
+      return $('.titleBox').height();
+    })
+
+    // Download SVG
+    $('#download').click(function() {
+      var svgData = $('svg')[0].outerHTML;
+      var svgBlob = new Blob([svgData], {
+        type: 'image/svg+xml;charset=utf-8'
+      });
+      var svgUrl = URL.createObjectURL(svgBlob);
+      var downloadLink = document.createElement('a');
+      downloadLink.href = svgUrl;
+      downloadLink.download = state + '_' + 'Congress' + congress + '.svg';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  </script>
 </body>
 
 </html>

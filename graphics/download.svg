@@ -1,0 +1,22 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 20px;
+      }
+    </style>
+  </defs>
+  <title>download</title>
+  <g>
+    <g>
+      <line class="cls-1" x1="250" y1="47.5" x2="250" y2="409.5"/>
+      <line class="cls-1" x1="250" y1="409.5" x2="403" y2="285.5"/>
+      <line class="cls-1" x1="250" y1="409.5" x2="97" y2="285.5"/>
+    </g>
+    <line class="cls-1" x1="97" y1="452.5" x2="403" y2="452.5"/>
+  </g>
+</svg>

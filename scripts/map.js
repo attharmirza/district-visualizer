@@ -36,14 +36,20 @@ function clicked(d) {
       });
     }, 500)
 
-    d3.select('#title').classed('titleShadow', true);
+    d3.select('#title').classed('shadow', true);
+    d3.select('#download').classed('shadow', true);
+    d3.select('#logo').classed('shadow', true);
+
   } else {
     loadDistricts({
       state: state,
       congress: congress
     });
 
-    d3.select('#title').classed('titleShadow', false);
+    d3.select('#title').classed('shadow', false);
+    d3.select('#download').classed('shadow', false);
+    d3.select('#logo').classed('shadow', false);
+
   };
 
   // setTimeout(function() {
