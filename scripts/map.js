@@ -9,7 +9,8 @@ var congress;
 
 var svg = d3.select('#map').append('svg')
   .attr('width', width)
-  .attr('height', height);
+  .attr('height', height)
+  .attr('shape-rendering', 'optimizeSpeed');
 
 var projection = d3.geoAlbersUsa()
   .translate([width / 2, height / 2])
